@@ -2,7 +2,7 @@ package downstream
 
 import (
 	"context"
-	"errors"
+	"fmt"
 	"log"
 	"math/rand"
 	"time"
@@ -23,7 +23,7 @@ func (a *Async) Do(ctx context.Context) error {
 	}
 	if a.Dies {
 		log.Printf("async #%d dies after %v\n", a.ID, waitDur)
-		return errors.New("dies")
+		return fmt.Errorf("async #%d dies after %v", a.ID, waitDur)
 	}
 	log.Printf("async #%d succeeded after %v\n", a.ID, waitDur)
 	return nil

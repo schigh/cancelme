@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"encoding/json"
 	"flag"
 	"fmt"
@@ -40,14 +39,7 @@ func handleError(rw http.ResponseWriter, err error) {
 	log.Printf("%v\n", err)
 
 	rw.WriteHeader(500)
-
-	if err == context.Canceled {
-		_, _ = rw.Write([]byte(`{"error":"context was cancelled"}`))
-	}
-
-	if err == context.DeadlineExceeded {
-		_, _ = rw.Write([]byte(`{"error":"context deadline exceeded"}`))
-	}
+	_,_ = rw.Write([]byte(fmt.Sprintf(`{"message":"%s"}`, err.Error())))
 }
 
 func handleData(rw http.ResponseWriter, data map[string]interface{}) {
