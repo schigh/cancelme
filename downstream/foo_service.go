@@ -2,7 +2,6 @@ package downstream
 
 import (
 	"context"
-	"log"
 	"time"
 
 	"golang.org/x/sync/errgroup"
@@ -28,7 +27,7 @@ func (f *Foo) Do(ctx context.Context) (map[string]interface{}, error) {
 	}
 
 	baz := &Baz{
-		Depth:      f.Depth - 1,
+		Depth:      f.Depth,
 		StagePause: f.StagePause,
 	}
 
@@ -40,13 +39,12 @@ func (f *Foo) Do(ctx context.Context) (map[string]interface{}, error) {
 			cf()
 		} else {
 			baz.Cancels = true
-			baz.CancelDepth = f.CancelDepth - 1
+			baz.CancelDepth = f.CancelDepth
 		}
 	case f.Timeout > 0:
 		ctx, _ = context.WithTimeout(ctx, f.Timeout)
 	}
 
-	log.Printf("dispatching baz %d\n", baz.Depth)
 	return baz.Do(ctx)
 }
 
