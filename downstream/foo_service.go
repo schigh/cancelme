@@ -10,7 +10,7 @@ import (
 
 type Foo struct {
 	Async       bool
-	AsyncDies int
+	AsyncDies   int
 	Timeout     time.Duration
 	Depth       int
 	Cancels     bool
@@ -56,9 +56,9 @@ func (f *Foo) DoAsync(ctx context.Context) (map[string]interface{}, error) {
 		ii := i
 		errGroup.Go(func() error {
 			a := &Async{
-				ID: ii,
+				ID:      ii,
 				MaxWait: f.StagePause,
-				Dies: f.AsyncDies == ii,
+				Dies:    f.AsyncDies == ii,
 			}
 			return a.Do(ctx)
 		})

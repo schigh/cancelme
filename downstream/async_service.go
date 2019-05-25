@@ -9,9 +9,9 @@ import (
 )
 
 type Async struct {
-	ID int
+	ID      int
 	MaxWait time.Duration
-	Dies bool
+	Dies    bool
 }
 
 func (a *Async) Do(ctx context.Context) error {
